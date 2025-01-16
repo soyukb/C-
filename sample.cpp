@@ -7,17 +7,15 @@
 using namespace std;
 
 int main() {
-    int n;
-    cin >> n;
-    vector<int> arr(n+10);
-    for(int i=0;i<n;i++){
-        cin >> arr[i];
+    string s;
+    getline(cin,s);
+    int now=0;
+    for(int i=0;i<s.size();i++){
+        if(s[i]==' '){
+            cout << s.substr(now,i-now) << endl;
+            now+=i+1;
+        }
+       
     }
-    int count=0;
-    for(int i=0;i<n;i++){
-        int it = upper_bound(arr.begin(),arr.begin()+n,arr[i]/2)-arr.begin();
-        count+=it;
-    }
-    cout << count;
 }
     
