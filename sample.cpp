@@ -7,26 +7,35 @@
 using namespace std;
 
 int main() {
-    int n,q;
-    cin >> n >> q;
-    string s;
-    cin >> s;
-    vector<int> sum(n+1);
-    sum[0]=0;
-    sum[1]=0;
-    for(int i=1;i<n;i++){
-        if(s[i]=='C' && s[i-1]=='A'){
-            sum[i+1]=sum[i]+1;
-        }else{
-            sum[i+1]=sum[i];
+    int n,m;
+    cin >> n >> m;
+    vector<vector<int>> g(n+1);
+    vector<bool> vesited(n+1,false); 
+    for(int i=0;i<m;i++){
+        int a,b;
+        cin >> a >> b;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    queue<int> q;
+    q.push(1);
+    vesited[1]=true;
+    while(!q.empty()){
+        int now = q.front();
+        q.pop();
+        for(int i=0;i<g[now].size();i++){
+            int next = g[now][i];
+            if(vesited[next]==false){
+                q.push(next);
+                vesited[next]=true;
+            }
         }
     }
-    for(auto a:sum){
-        cout << a << endl;
+    for(int i=1;i<=n;i++){
+        if(vesited[i]==false){
+            cout << "No";
+            return 0;
+        }
     }
-    // for(int i=0;i<q;i++){
-    //     int a,b;
-    //     cin >> a >> b;
-    //     cout << sum[b]-sum[a-1] << endl;
-    // }
+    cout << "Yes";
 }    
