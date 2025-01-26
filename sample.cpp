@@ -7,38 +7,33 @@
 using namespace std;
 
 int main() {
-    int n,m;
-    cin >> n >> m;
-    n = 2*n;
-    vector<vector<char>> mp(n+1,vector<char>(m+1));
-    vector<pair<int,int>> ans(n+1);
-    map<int,int> win;
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=m;j++){
-            cin >> mp[i][j];
-        }
-        win[i]=0;
-        ans[i]={0,i};
+    int h,w;
+    cin >> h >> w;
+    vector<string> mp(h);
+    for(int i=0;i<h;i++){
+        cin >> mp[i];
     }
-    for(int i=1;i<=m;i++){
-        for(int k=1;k<=n/2;k++){
-            int x = 2*k-1;
-            int y = 2*k;
-            char a = mp[ans[x].second][i];
-            char b = mp[ans[y].second][i];
-            if(a==b){
-                continue;
-            }else if(a>b){
-                win[x]++;
-                ans[x].first++;
-            }else if(a<b){
-                win[y]++;
-                ans[y].first++;
+    int a=INT_MAX;
+    int b=INT_MAX;
+    int c=INT_MIN;
+    int d=INT_MIN;
+    for(int i=0;i<h;i++){
+        for(int j=0;j<w;j++){
+            if(mp[i][j]=='#'){
+                a=min(a,i);
+                b=min(b,j);
+                c=max(c,i);
+                d=max(d,j);
             }
-            sort(ans.begin(),ans.end());
         }
     }
-    for(auto [dy,dx]:ans){
-        cout << dx << endl;
+    for(int i=a;i<=c;i++){
+        for(int j=b;j<=d;j++){
+            if(mp[i][j]=='.'){
+                cout << "No";
+                return 0;
+            }
+        }
     }
-}    
+    cout << "Yes";
+}
